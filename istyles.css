@@ -1,0 +1,142 @@
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: 100vh;
+}
+
+.seismic--info {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.service--info {
+  position: absolute;
+  bottom: 10px; 
+  left: 10px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100vh;
+  filter: none;
+}
+
+.leaflet-control-attribution,
+.leaflet-control-zoom {
+  display: none; 
+}
+
+.leaflet-popup-content {
+  color: #000;
+}
+
+.leaflet-container a.leaflet-popup-close-button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.leaflet-tile-pane, .leaflet-marker-pane, .leaflet-shadow-pane, .leaflet-overlay-pane {
+  filter: grayscale(1);
+}
+
+.leaflet-pane {
+  filter: invert(1) grayscale(1);
+}
+
+#custom-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.default-marker {
+  background-color: gray;
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.green-marker {
+  background-color: #8EFF8A;
+  color: #006400;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.yellow-marker {
+  background-color: #FFFF66;
+  color: #000000;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.orange-marker {
+  background-color: #FFB266;
+  color: #663300;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.red-marker {
+  background-color: #FF6666;
+  color: #990000;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.purple-marker {
+  background-color: #D966FF;
+  color: #4B0082;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.dark-purple-marker {
+  background-color: #A932FF;
+  color: #4B0082;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.blue-marker {
+  background-color: #66B2FF;
+  color: #00008B;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.dark-blue-marker {
+  background-color: #3366FF;
+  color: #00008B;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.gray-marker {
+  background-color: #A0A0A0;
+  color: #FFFFFF;
+  padding: 8px;
+  border-radius: 50%;
+}
