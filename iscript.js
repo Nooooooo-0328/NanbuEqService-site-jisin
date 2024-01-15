@@ -4,7 +4,6 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// 以前の地震の ID を保存する変数
 let previousEarthquakeId = null;
 
 var scalesText = {
@@ -133,6 +132,5 @@ async function updateMapWithEarthquakeData() {
   }
 }
 
-// 初回の地図更新とその後の定期更新
 updateMapWithEarthquakeData();
 setInterval(updateMapWithEarthquakeData, 2000);
