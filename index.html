@@ -5,32 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>しんどぶんぷ</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="istyles.css" /> 
+  <link rel="stylesheet" href="istyles.css" />
 </head>
 <body>
 
   <div id="map"></div>
   <div id="seismic-info" class="seismic--info">
-    震度分布 v0.0.1<span id="intensity"></span><br>
+    <span id="info">-----</span><br>
     現在時刻: <span id="current-time">--/--/-- --:--</span>
+  </div>
+  <div id="tsunami-info" class="tsunami--info">
+    <span id="tsunami-data">津波情報取得中...</span>
   </div>
   <div id="service-info" class="service--info">&copy; Nanbu Eq Service | Nooooooo</div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-ajax/dist/leaflet.ajax.js"></script>
   <script src="iscript.js"></script> 
-
-  <script>
-    function updateCurrentTime() {
-      const currentTimeElement = document.getElementById('current-time');
-      const currentTime = new Date().toLocaleString('ja-JP');
-      currentTimeElement.textContent = currentTime;
-    }
-
-    updateCurrentTime();
-
-    setInterval(updateCurrentTime, 1000);
-  </script>
-
 </body>
 </html>

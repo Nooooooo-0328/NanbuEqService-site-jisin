@@ -10,6 +10,15 @@ var scalesText = {
   '-1': '調査中', 10: '1', 20: '2', 30: '3', 40: '4', 45: '5-', 50: '5+', 55: '6-', 60: '6+', 70: '7'
 };
 
+const tsunamiLevels = {
+  'None': 'この地震による津波の心配はありません。',
+  'Unknown': '津波の影響は不明です。',
+  'Checking': '津波の影響を現在調査中です。',
+  'NonEffective': '若干の海面変動が予想されますが、被害の心配はありません。',
+  'Watch': 'この地震で津波注意報が発表されています。',
+  'Warning': 'この地震で津波警報等（大津波警報・津波警報あるいは津波注意報）が発表されています。'
+};
+
 function getIconPathByIntensity(intensity) {
   switch (intensity) {
     case '-1':
@@ -37,24 +46,51 @@ function getIconPathByIntensity(intensity) {
   }
 }
 
+function updateCurrentTime() {
+  const currentTimeElement = document.getElementById('current-time');
+  const currentTime = new Date().toLocaleString('ja-JP');
+  currentTimeElement.textContent = currentTime;
+}
+
 async function updateMapWithEarthquakeData() {
   try {
-    const response = await fetch('https://api.p2pquake.net/v2/history?codes=551&limit=1');
-    if (!response.ok) {
+    const earthquakeResponse = await fetch('https://api.p2pquake.net/v2/history?codes=551&limit=1');
+    if (!earthquakeResponse.ok) {
       console.error('地震データの取得中にエラーが発生しました。');
       updateCurrentTime(); 
       return;
     }
 
-    const data = await response.json();
-    if (data && data.length > 0) {
-      const earthquake = data[0];
+    const earthquakeData = await earthquakeResponse.json();
+    if (earthquakeData && earthquakeData.length > 0) {
+      const earthquake = earthquakeData[0];
       const newEarthquakeId = earthquake.id;
+
       if (newEarthquakeId !== previousEarthquakeId) {
         previousEarthquakeId = newEarthquakeId;
 
-        const earthquake_data = earthquake.earthquake;
-        const points = earthquake.points;
+        const issueType = earthquake.issue?.type;
+
+        let info;
+        switch (issueType) {
+          case "ScalePrompt":
+            info = "震度速報";
+            break;
+          case "Destination":
+            info = "震源に関する情報";
+            break;
+          case "ScaleAndDestination":
+            info = "震源・震度に関する情報";
+            break;
+          case "DetailScale":
+            info = "各地の震度に関する情報";
+            break;
+          case "Foreign":
+            info = "遠地地震に関する情報";
+            break;
+          default:
+            info = "その他";
+        }
 
         map.eachLayer(layer => {
           if (layer instanceof L.Marker) {
@@ -62,13 +98,11 @@ async function updateMapWithEarthquakeData() {
           }
         });
 
-        await Promise.all(points.map(async point => {
+        await Promise.all(earthquake.points.map(async point => {
           const scale = point.scale.toString();
-          console.log('震度:', scale);
 
           if (scale in scalesText || scale === '-1') {
             const intensity = scalesText[scale];
-            console.log('震度:', intensity);
 
             const addrResponse = await fetch(`https://msearch.gsi.go.jp/address-search/AddressSearch?q=${point.pref}${point.addr}`);
             if (!addrResponse.ok) {
@@ -77,22 +111,17 @@ async function updateMapWithEarthquakeData() {
             }
 
             const addrData = await addrResponse.json();
-            console.log('住所データ:', addrData);
 
             const coordinates = addrData[0].geometry.coordinates;
             const reversedCoordinates = coordinates.reverse();
-            console.log('座標:', reversedCoordinates);
 
             const regionName = point.addr;
 
             const iconPath = getIconPathByIntensity(scale);
-            console.log('アイコンのパス:', iconPath);
 
+            if (earthquake.earthquake && earthquake.earthquake.hypocenter) {
+              const epicenterCoordinates = [earthquake.earthquake.hypocenter.latitude, earthquake.earthquake.hypocenter.longitude];
 
-            if (earthquake_data && earthquake_data.hypocenter) {
-              const epicenterCoordinates = [earthquake_data.hypocenter.latitude, earthquake_data.hypocenter.longitude];
-              console.log('震源地座標:', epicenterCoordinates);
-  
               const epicenterIconPath = 'image/epicenter.png';
               const epicenterCustomIcon = L.icon({
                 iconUrl: epicenterIconPath,
@@ -100,12 +129,12 @@ async function updateMapWithEarthquakeData() {
                 iconAnchor: [24, 24],
                 popupAnchor: [0, -24]
               });
-  
+
               L.marker(epicenterCoordinates, {
                 icon: epicenterCustomIcon
               }).addTo(map);
             }
-  
+
             map.flyTo(reversedCoordinates, 9, { animate: false });
 
             const customIcon = L.icon({
@@ -114,13 +143,18 @@ async function updateMapWithEarthquakeData() {
               iconAnchor: [16, 16],
               popupAnchor: [0, -16]
             });
-            
+
             L.marker(reversedCoordinates, {
               icon: customIcon
             }).addTo(map);
             map.flyTo(reversedCoordinates, 9);
           }
         }));
+
+        displayTsunamiInfo(earthquake.tsunami?.domesticTsunami || 'None');
+
+        const infoElement = document.getElementById('info');
+        infoElement.textContent = info;
       }
     } else {
       console.error('利用可能な地震データがありません。');
@@ -132,5 +166,13 @@ async function updateMapWithEarthquakeData() {
   }
 }
 
+function displayTsunamiInfo(tsunamiInfo) {
+  const tsunamiInfoElement = document.getElementById('tsunami-data');
+  tsunamiInfoElement.textContent = tsunamiLevels[tsunamiInfo] || '津波情報がありません';
+}
+
 updateMapWithEarthquakeData();
 setInterval(updateMapWithEarthquakeData, 2000);
+
+updateCurrentTime();
+setInterval(updateCurrentTime, 1000);
