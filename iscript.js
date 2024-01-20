@@ -1,6 +1,6 @@
 //  Nooooooo  //
 //  改変や複製を一切禁止します。  //
-//  https://github.com/Nooooooo-0328/Clock-site  //
+//  https://github.com/Nooooooo-0328/NanbuEqService-site-jisin  //
 
 var map = L.map('map').setView([35.6895, 139.6917], 5);
 
