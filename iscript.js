@@ -1,3 +1,7 @@
+//  Nooooooo  //
+//  改変や複製を一切禁止します。  //
+//  https://github.com/Nooooooo-0328/Clock-site  //
+
 var map = L.map('map').setView([35.6895, 139.6917], 5);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
@@ -181,7 +185,7 @@ async function updateMapWithEarthquakeData() {
 
 function displayTsunamiInfo(tsunamiInfo) {
   const tsunamiInfoElement = document.getElementById('tsunami-data');
-  tsunamiInfoElement.textContent = tsunamiLevels[tsunamiInfo] || '津波情報がありません';
+  tsunamiInfoElement.textContent = tsunamiLevels[tsunamiInfo] || '津波情報を取得できません';
 }
 
 updateMapWithEarthquakeData();
