@@ -1,8 +1,6 @@
 //  Nooooooo  //
 //  改変や複製を一切禁止します。  //
 //  https://github.com/Nooooooo-0328/NanbuEqService-site-jisin  //
-
-
 var map = L.map('map').setView([35.6895, 139.6917], 5);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
@@ -100,7 +98,7 @@ async function updateMapWithEarthquakeData() {
           }
         });
 
-        let bounds = L.latLngBounds(); 
+        let bounds = L.latLngBounds();
 
         await Promise.all(earthquake.points.map(async point => {
           const scale = point.scale.toString();
@@ -121,47 +119,50 @@ async function updateMapWithEarthquakeData() {
               }
             }
 
-            const coordinates = addrData[0].geometry.coordinates;
-            const reversedCoordinates = coordinates.reverse();
+            // Check if addrData[0] and addrData[0].geometry are defined
+            if (addrData && addrData[0] && addrData[0].geometry) {
+              const coordinates = addrData[0].geometry.coordinates;
+              const reversedCoordinates = coordinates.reverse();
 
-            const regionName = point.addr;
+              const regionName = point.addr;
 
-            const iconPath = getIconPathByIntensity(scale);
+              const iconPath = getIconPathByIntensity(scale);
 
-            bounds.extend(reversedCoordinates); 
+              bounds.extend(reversedCoordinates);
 
-            if (earthquake.earthquake && earthquake.earthquake.hypocenter) {
-              const epicenterCoordinates = [earthquake.earthquake.hypocenter.latitude, earthquake.earthquake.hypocenter.longitude];
+              if (earthquake.earthquake && earthquake.earthquake.hypocenter) {
+                const epicenterCoordinates = [earthquake.earthquake.hypocenter.latitude, earthquake.earthquake.hypocenter.longitude];
 
-              const epicenterTime = earthquake.earthquake.time;
+                const epicenterTime = earthquake.earthquake.time;
 
-              epicenterTimeElement.textContent = epicenterTime || 'Unknown';
+                epicenterTimeElement.textContent = epicenterTime || 'Unknown';
 
-              const epicenterIconPath = 'image/epicenter.png';
-              const epicenterCustomIcon = L.icon({
-                iconUrl: epicenterIconPath,
-                iconSize: [60, 60],
-                iconAnchor: [24, 24],
-                popupAnchor: [0, -24],
+                const epicenterIconPath = 'image/epicenter.png';
+                const epicenterCustomIcon = L.icon({
+                  iconUrl: epicenterIconPath,
+                  iconSize: [60, 60],
+                  iconAnchor: [24, 24],
+                  popupAnchor: [0, -24],
+                });
+
+                L.marker(epicenterCoordinates, {
+                  icon: epicenterCustomIcon,
+                }).addTo(map);
+
+                bounds.extend(epicenterCoordinates);
+              }
+
+              const customIcon = L.icon({
+                iconUrl: iconPath,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16],
               });
 
-              L.marker(epicenterCoordinates, {
-                icon: epicenterCustomIcon,
+              L.marker(reversedCoordinates, {
+                icon: customIcon,
               }).addTo(map);
-
-              bounds.extend(epicenterCoordinates);
             }
-
-            const customIcon = L.icon({
-              iconUrl: iconPath,
-              iconSize: [32, 32],
-              iconAnchor: [16, 16],
-              popupAnchor: [0, -16],
-            });
-
-            L.marker(reversedCoordinates, {
-              icon: customIcon,
-            }).addTo(map);
           }
         }));
 
@@ -171,7 +172,6 @@ async function updateMapWithEarthquakeData() {
         infoElement.textContent = info;
 
         map.fitBounds(bounds, { padding: [10, 10], animate: false, maxZoom: 10 });
-
       }
     } else {
       console.error('利用可能な地震データがありません。');
