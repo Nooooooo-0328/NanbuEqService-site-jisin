@@ -1,6 +1,7 @@
 //  Nooooooo  //
 //  改変や複製を一切禁止します。  //
 //  https://github.com/Nooooooo-0328/NanbuEqService-site-jisin  //
+
 var map = L.map('map').setView([35.6895, 139.6917], 5);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
@@ -72,9 +73,12 @@ async function updateMapWithEarthquakeData() {
         const issueType = earthquake.issue?.type;
 
         let info;
+        let displayEpicenterIcon = true; 
+
         switch (issueType) {
           case 'ScalePrompt':
             info = '震度速報';
+            displayEpicenterIcon = false;
             break;
           case 'Destination':
             info = '震源に関する情報';
@@ -119,7 +123,6 @@ async function updateMapWithEarthquakeData() {
               }
             }
 
-            // Check if addrData[0] and addrData[0].geometry are defined
             if (addrData && addrData[0] && addrData[0].geometry) {
               const coordinates = addrData[0].geometry.coordinates;
               const reversedCoordinates = coordinates.reverse();
@@ -130,7 +133,7 @@ async function updateMapWithEarthquakeData() {
 
               bounds.extend(reversedCoordinates);
 
-              if (earthquake.earthquake && earthquake.earthquake.hypocenter) {
+              if (displayEpicenterIcon && earthquake.earthquake && earthquake.earthquake.hypocenter) {
                 const epicenterCoordinates = [earthquake.earthquake.hypocenter.latitude, earthquake.earthquake.hypocenter.longitude];
 
                 const epicenterTime = earthquake.earthquake.time;

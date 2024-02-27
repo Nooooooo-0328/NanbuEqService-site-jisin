@@ -1,3 +1,7 @@
+<!--  Nooooooo -->
+<!--  改変や複製を一切禁止します。  -->
+<!--  https://github.com/Nooooooo-0328/NanbuEqService-site-jisin  -->
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -27,14 +31,18 @@
   <div id="tsunami-info" class="tsunami--info">
     <span id="tsunami-data">Nanbu Eq Service 震度分布  |  津波情報取得中...</span>
   </div>
-  <div id="service-info" class="service--info"><button id="settings-button" onclick="toggleSettingsPopup()">⚙️</button>  |  &copy; Nanbu Eq Service | Nooooooo<br>この震度分布の無断保存や使用は一切禁止とします</div>
+  <div id="service-info" class="service--info"><button id="settings-button" onclick="toggleSettingsPopup()">設定</button>  |  &copy; Nanbu Eq Service<br>
+    この震度分布の無断使用・保存は一切禁じます。</div>
   <div id="settings-popup" class="custom-popup">
     <ul id="settings-content" class="settings-list">
-      ver0.1.0<br>
+      Verβ0.1.1<br>
       ※これらの設定はすべて自動保存されます
       <h1>設定 メニュー (テスト導入)</h1>
       <li class="settings-list-item" onclick="toggleDisplaySetting()">現在時刻表示: <span id="display_setting_text"></span></li>
-      <li class="settings-list-item"><a href="https://github.com/Nooooooo-0328/NanbuEqService-site-jisin" target="_blank">githubレポジトリ (外部サイトへ移動します)</a></li>
+      <li class="settings-list-item" onclick="toggleDarkMode()">ダークモード切り替え: <span id="toggle_Dark_Mode_text"></span></li>
+      <!-- <li class="settings-list-item"><a href="https://github.com/Nooooooo-0328/NanbuEqService-site-jisin" target="_blank">githubレポジトリ (外部サイト(github.com)へ移動します)</a></li> -->
+      <li class="settings-list-item"><a href="https://x.com/Nooooooo_0328" target="_blank">お問い合わせ (外部サイト(x.com)へ移動します)</a></li>
+      &copy; Nanbu Eq Service
     </ul>
   </div>
   <div id="overlay" onclick="hideSettingsPopup()"></div>
