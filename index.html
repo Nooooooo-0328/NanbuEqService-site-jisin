@@ -7,13 +7,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nanbu Eq Service 震度分布 [v0.1.0]</title>
-  <link rel="icon" href="favicon.ico" type="image/icon.png">
-  <link rel="shortcut icon" href="favicon.ico" type="image/icon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nanbu Eq Service for 震度分布 [v0.1.0]</title>
   <meta name="description" content="Nanbu Eq Service の震度分布サイトです。">
-  <meta name="keywords" content="1, 2, 3">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="css/istyles.css" />
   <link rel="stylesheet" href="css/isettings.css" />
@@ -21,15 +16,16 @@
 <body>
   <div id="map"></div>
   <div id="seismic-info" class="seismic--info">
-    <span id="info">情報取得中...  |  [v0.0.5]</span><br>
-    ----------          発生時刻     ----------<br>
+    Nanbu Eq Service for 震度分布<br>
+    <span id="info">情報取得中...  |  [v0.1.0]</span><br>
+    ------------          発生時刻     -----------<br>
     <span id="epicenter-time">----/--/-- --:--:--</span><br>
-    ----------          現在時刻     ----------<br>
+    ------------          現在時刻     -----------<br>
     <span id="current-time">----/--/-- --:--:--</span>
     <span id="display-setting-text"></span>
   </div>
   <div id="tsunami-info" class="tsunami--info">
-    <span id="tsunami-data">Nanbu Eq Service 震度分布  |  津波情報取得中...</span>
+    <span id="tsunami-data">Nanbu Eq Service for 震度分布  |  津波情報取得中...</span>
   </div>
   <div id="service-info" class="service--info"><button id="settings-button" onclick="toggleSettingsPopup()">設定</button>  |  &copy; Nanbu Eq Service<br>
     この震度分布の無断使用・保存は一切禁じます。</div>
