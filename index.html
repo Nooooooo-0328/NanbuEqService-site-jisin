@@ -4,6 +4,7 @@
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,39 +14,45 @@
   <link rel="stylesheet" href="css/istyles.css" />
   <link rel="stylesheet" href="css/isettings.css" />
 </head>
+
 <body>
   <div id="map"></div>
   <div id="seismic-info" class="seismic--info">
     Nanbu Eq Service for 震度分布<br>
-    <span id="info">情報取得中...  |  [v0.1.0]</span><br>
-    ------------          発生時刻     -----------<br>
+    <span id="info">情報取得中... | [v0.1.0]</span><br>
+    ------------ 発生時刻 -----------<br>
     <span id="epicenter-time">----/--/-- --:--:--</span><br>
-    ------------          現在時刻     -----------<br>
+    ------------ 現在時刻 -----------<br>
     <span id="current-time">----/--/-- --:--:--</span>
     <span id="display-setting-text"></span>
   </div>
   <div id="tsunami-info" class="tsunami--info">
-    <span id="tsunami-data">Nanbu Eq Service for 震度分布  |  津波情報取得中...</span>
+    <span id="tsunami-data">Nanbu Eq Service for 震度分布 | 津波情報取得中...</span>
   </div>
-  <div id="service-info" class="service--info"><button id="settings-button" onclick="toggleSettingsPopup()">設定</button>  |  &copy; Nanbu Eq Service<br>
+  <div id="service-info" class="service--info"><button id="settings-button" onclick="toggleSettingsPopup()">設定</button>
+    | &copy; Nanbu Eq Service<br>
     この震度分布の無断使用・保存は一切禁じます。</div>
   <div id="settings-popup" class="custom-popup">
     <ul id="settings-content" class="settings-list">
       Verβ0.1.1<br>
       ※これらの設定はすべて自動保存されます
       <h1>設定 メニュー (テスト導入)</h1>
-      <li class="settings-list-item" onclick="toggleDisplaySetting()">現在時刻表示: <span id="display_setting_text"></span></li>
-      <li class="settings-list-item" onclick="toggleDarkMode()">ダークモード切り替え: <span id="toggle_Dark_Mode_text"></span></li>
+      <li class="settings-list-item" onclick="toggleDisplaySetting()">現在時刻表示: <span id="display_setting_text"></span>
+      </li>
+      <li class="settings-list-item" onclick="toggleDarkMode()">ダークモード切り替え: <span id="toggle_Dark_Mode_text"></span>
+      </li>
       <!-- <li class="settings-list-item"><a href="https://github.com/Nooooooo-0328/NanbuEqService-site-jisin" target="_blank">githubレポジトリ (外部サイト(github.com)へ移動します)</a></li> -->
-      <li class="settings-list-item"><a href="https://x.com/Nooooooo_0328" target="_blank">お問い合わせ (外部サイト(x.com)へ移動します)</a></li>
+      <li class="settings-list-item"><a href="https://x.com/Nooooooo_0328" target="_blank">お問い合わせ
+          (外部サイト(x.com)へ移動します)</a></li>
       &copy; Nanbu Eq Service
     </ul>
   </div>
   <div id="overlay" onclick="hideSettingsPopup()"></div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet-ajax/dist/leaflet.ajax.js"></script>
-  <script src="JavaScript/iscript.js"></script> 
+  <script src="JavaScript/iscript.js"></script>
   <script src="JavaScript/icurrentTime.js"></script>
   <script src="JavaScript/isettings.js"></script>
 </body>
+
 </html>

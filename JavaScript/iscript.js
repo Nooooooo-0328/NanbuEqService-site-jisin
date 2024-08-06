@@ -25,28 +25,16 @@ const tsunamiLevels = {
 
 function getIconPathByIntensity(intensity) {
   switch (intensity) {
-    case '-1':
-      return 'image/h.png';
-    case '10':
-      return 'image/1.png';
-    case '20':
-      return 'image/2.png';
-    case '30':
-      return 'image/3.png';
-    case '40':
-      return 'image/4.png';
-    case '45':
-      return 'image/5-.png';
-    case '50':
-      return 'image/5+.png';
-    case '55':
-      return 'image/6-.png';
-    case '60':
-      return 'image/6+.png';
-    case '70':
-      return 'image/7.png';
-    default:
-      return 'image/error.png';
+    case '-1': return 'image/h.png';
+    case '10': return 'image/1.png';
+    case '20': return 'image/2.png';
+    case '30': return 'image/3.png';
+    case '40': return 'image/4.png';
+    case '45': return 'image/5-.png';
+    case '50': return 'image/5+.png';
+    case '55': return 'image/6-.png';
+    case '60': return 'image/6+.png';
+    case '70': return 'image/7.png';
   }
 }
 
@@ -73,27 +61,15 @@ async function updateMapWithEarthquakeData() {
         const issueType = earthquake.issue?.type;
 
         let info;
-        let displayEpicenterIcon = true; 
+        let displayEpicenterIcon = true;
 
         switch (issueType) {
-          case 'ScalePrompt':
-            info = '震度速報';
-            displayEpicenterIcon = false;
-            break;
-          case 'Destination':
-            info = '震源に関する情報';
-            break;
-          case 'ScaleAndDestination':
-            info = '震源・震度に関する情報';
-            break;
-          case 'DetailScale':
-            info = '各地の震度に関する情報';
-            break;
-          case 'Foreign':
-            info = '遠地地震に関する情報';
-            break;
-          default:
-            info = 'その他';
+          case 'ScalePrompt': info = '震度速報'; displayEpicenterIcon = false; break;
+          case 'Destination': info = '震源に関する情報'; break;
+          case 'ScaleAndDestination': info = '震源・震度に関する情報'; break;
+          case 'DetailScale': info = '各地の震度に関する情報'; break;
+          case 'Foreign': info = '遠地地震に関する情報'; break;
+          default: info = 'その他';
         }
 
         map.eachLayer(layer => {
@@ -140,7 +116,7 @@ async function updateMapWithEarthquakeData() {
 
                 epicenterTimeElement.textContent = epicenterTime || 'Unknown';
 
-                const epicenterIconPath = 'image/epicenter.png';
+                const epicenterIconPath = 'image/hypocenter.png';
                 const epicenterCustomIcon = L.icon({
                   iconUrl: epicenterIconPath,
                   iconSize: [60, 60],
@@ -174,7 +150,11 @@ async function updateMapWithEarthquakeData() {
         const infoElement = document.getElementById('info');
         infoElement.textContent = info;
 
-        map.fitBounds(bounds, { padding: [10, 10], animate: false, maxZoom: 10 });
+        map.fitBounds(bounds, {
+          padding: [10, 10],
+          animate: true,
+          maxZoom: 9
+        });
       }
     } else {
       console.error('利用可能な地震データがありません。');
@@ -192,4 +172,4 @@ function displayTsunamiInfo(tsunamiInfo) {
 }
 
 updateMapWithEarthquakeData();
-setInterval(updateMapWithEarthquakeData, 2000);
+setInterval(updateMapWithEarthquakeData, 20000); 
